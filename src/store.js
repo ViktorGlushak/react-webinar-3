@@ -62,13 +62,17 @@ class Store {
   /**
    * Выделение записи по коду
    * @param code
+   * @param multiSelect {boolean} Флаг множественного выделения (с нажатой Ctrl/Cmd)
    */
-  selectItem(code) {
+  selectItem(code, multiSelect = false) {
     this.setState({
       ...this.state,
       list: this.state.list.map(item => {
         if (item.code === code) {
-          item.selected = !item.selected;
+          return { ...item, selected: !item.selected };
+        }
+        if (!multiSelect) {
+          return { ...item, selected: false };
         }
         return item;
       }),
