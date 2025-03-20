@@ -54,6 +54,12 @@ body {
   padding: 20px 10px;
 }
 
+.Item-selectCount {
+  font-size: 0.9em;
+  color: inherit;
+  opacity: 0.8;
+}
+
 .Item-actions {
   display: flex;
   justify-content: flex-end;

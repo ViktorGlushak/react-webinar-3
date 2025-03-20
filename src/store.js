@@ -9,6 +9,12 @@ class Store {
     this.lastCode = 0;
     if (initState.list && initState.list.length > 0) {
       this.lastCode = Math.max(...initState.list.map(item => item.code));
+      
+      // Инициализируем счетчик выделений, если его нет
+      this.state.list = this.state.list.map(item => ({
+        ...item,
+        selectCount: item.selectCount || 0
+      }));
     }
   }
 
@@ -52,7 +58,7 @@ class Store {
 
     this.setState({
       ...this.state,
-      list: [...this.state.list, { code: newCode, title: 'Новая запись' }],
+      list: [...this.state.list, { code: newCode, title: 'Новая запись', selectCount: 0 }],
     });
   }
 
@@ -77,7 +83,9 @@ class Store {
       ...this.state,
       list: this.state.list.map(item => {
         if (item.code === code) {
-          return { ...item, selected: !item.selected };
+          // Увеличиваем счетчик выделений только при выделении записи, а не при снятии выделения
+          const newSelectCount = (!item.selected) ? (item.selectCount || 0) + 1 : (item.selectCount || 0);
+          return { ...item, selected: !item.selected, selectCount: newSelectCount };
         }
         if (!multiSelect) {
           return { ...item, selected: false };

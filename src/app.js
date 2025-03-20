@@ -31,7 +31,10 @@ function App({ store }) {
                 }}
               >
                 <div className="Item-code">{item.code}</div>
-                <div className="Item-title">{item.title}</div>
+                <div className="Item-title">
+                  {item.title}
+                  {item.selectCount > 0 && <span className="Item-selectCount"> | Выделяли {item.selectCount} раз</span>}
+                </div>
                 <div className="Item-actions">
                   <button onClick={(e) => {
                     e.stopPropagation();
